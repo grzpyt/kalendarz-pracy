@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.grzpyt.twa",
+        "sha256_cert_fingerprints": ["7C:04:14:1D:0A:4E:C4:6C:0B:4C:E9:10:F6:A2:95:38:B5:B0:68:EE:2F:63:2D:F2:3C:0B:72:58:11:40:10:88"]
+      }
+    }]
