@@ -1,6 +1,6 @@
 {
-  "name": "Kalendarz Pracy i Urlopów",
-  "short_name": "Kalendarz",
+  "name": "Godziny",
+  "short_name": "Godziny",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
