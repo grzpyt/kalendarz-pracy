@@ -1,0 +1,13 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Kalendarz Pracy",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "Kalendarz",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "id": "kalendarz-pracy",
+  "description": "Aplikacja do ewidencji godzin pracy i urlopów"
+}
