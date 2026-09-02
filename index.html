@@ -41,6 +41,7 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       width: 100%;
       max-width: 850px;
+      touch-action: pan-y; /* Płynne przewijanie pionowe bez blokowania gestów poziomych */
     }
     
     /* Pasek górny z przyciskami */
@@ -185,6 +186,7 @@
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 4px;
+      user-select: none; /* Zapobiega zaznaczaniu tekstu podczas przesuwania */
     }
     .day-cell {
       background: #f8f9fa;
@@ -371,7 +373,7 @@
 </head>
 <body>
 
-  <div class="container">
+  <div class="container" id="calendarContainer">
     <!-- Górny pasek z przyciskami -->
     <div class="top-bar">
       <span class="top-bar-title">📅 Kalendarz Pracy i Urlopów</span>
@@ -860,6 +862,45 @@
           });
         }
         window.location.reload(true);
+      }
+    }
+
+    // --- OBSŁUGA GESTÓW PRZESUWANIA PALCEM (SWIPE) ---
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    const calendarContainer = document.getElementById('calendarContainer');
+
+    calendarContainer.addEventListener('touchstart', function(e) {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    calendarContainer.addEventListener('touchend', function(e) {
+      // Nie zmieniaj miesiąca, jeśli otwarte jest okno modalne edycji dnia
+      if (document.getElementById('modalBackdrop').style.display === 'flex') return;
+
+      touchEndX = e.changedTouches[0].screenX;
+      touchEndY = e.changedTouches[0].screenY;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+      const minSwipeDistance = 50; // Minimalna odległość przesunięcia palcem w pikselach
+
+      // Sprawdzamy, czy ruch w poziomie był wyraźnie większy niż w pionie (chroni przed zmianą przy zwykłym przewijaniu ekranu)
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > minSwipeDistance) {
+        if (diffX < 0) {
+          // Przesunięcie palcem w LEWO -> Następny miesiąc
+          changeMonth(1);
+        } else {
+          // Przesunięcie palcem w PRAWO -> Poprzedni miesiąc
+          changeMonth(-1);
+        }
       }
     }
 
